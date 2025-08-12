@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_fragments/layout :: layout(~{::section})}">
+<head></head>
+<body>
+<section>
+  <h2>Despliegue</h2>
+  <h3>Versiones</h3>
+  <ul>
+    <li>v0.1.0 — Scaffold inicial — Fecha: Lorem ipsum</li>
+    <li>v0.2.0 — Wiki básica — Fecha: Lorem ipsum</li>
+  </ul>
+
+  <h3>Pipeline (K8S + Jenkins)</h3>
+  <p>Lorem ipsum… (describe build → test → package → push → deploy)</p>
+
+  <h3>Apache (revisión del profe)</h3>
+  <p>Lorem ipsum… (cómo servir: proxy al jar o WAR en Tomcat)</p>
+</section>
+</body>
+</html>

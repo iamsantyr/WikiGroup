@@ -1,0 +1,16 @@
+<!-- templates/_fragments/menu.html -->
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <!-- Damos nombre al fragmento: 'menu' -->
+  <nav th:fragment="menu" class="site-nav">
+    <ul style="list-style:none; padding:0; margin:.5rem 0; display:flex; gap:1rem;">
+      <li><a th:href="@{/}">Inicio</a></li>
+      <li><a th:href="@{/equipo}">Equipo</a></li>
+      <li><a th:href="@{/proyecto}">Proyecto</a></li>
+      <li><a th:href="@{/requerimientos}">Requerimientos</a></li>
+      <li><a th:href="@{/arquitectura}">Arquitectura</a></li>
+      <li><a th:href="@{/despliegue}">Despliegue</a></li>
+      <li><a th:href="@{/contacto}">Contáctenos</a></li>
+    </ul>
+  </nav>
+</html>

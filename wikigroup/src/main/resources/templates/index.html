@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_fragments/layout :: layout(~{::section})}">
+<head></head>
+<body>
+<section>
+  <h2>Bienvenido</h2>
+  <p th:text="${mensaje}">Si ves esto, Thymeleaf está funcionando.</p>
+  <p>Proyecto base listo con Spring Boot + Thymeleaf + PostgreSQL.</p>
+</section>
+</body>
+</html>
