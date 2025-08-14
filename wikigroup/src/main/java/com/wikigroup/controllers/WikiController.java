@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WikiController {
 
-  // Página de inicio
+  // Redirige el inicio a /proyecto (cámbialo a /equipo si prefieres)
   @GetMapping("/")
-  public String index(Model model) {
-    model.addAttribute("pageTitle", "Inicio");
-    model.addAttribute("mensaje", "Hola, esta es la wiki del equipo.");
-    return "index";
+  public String root() {
+    return "redirect:/proyecto";
   }
 
   // Presentación del equipo
@@ -29,7 +27,7 @@ public class WikiController {
     return "proyecto";
   }
 
-  // Requerimientos
+  // Requerimientos (funcionales y no funcionales)
   @GetMapping("/requerimientos")
   public String requerimientos(Model model) {
     model.addAttribute("pageTitle", "Requerimientos");
@@ -49,7 +47,4 @@ public class WikiController {
     model.addAttribute("pageTitle", "Despliegue");
     return "despliegue";
   }
-
-  // OJO: aquí ya NO hay @GetMapping("/contacto") 
-  // porque esa ruta la manejará ContactoController.
 }
