@@ -1,23 +1,97 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{_fragments/layout :: layout(~{::section})}">
-<head></head>
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Requerimientos'">Requerimientos</title>
+</head>
 <body>
 <section>
-  <h2>Requerimientos</h2>
+  <h2>Requerimientos del Proyecto</h2>
+  <p>
+    <em>(Texto base del profesor, complementado por el equipo)</em> — Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit. Pellentesque posuere, nisl ut aliquet luctus, neque risus porttitor lorem, et bibendum
+    mi mi at ex.
+  </p>
 
-  <h3>Funcionales</h3>
+  <h3>Alcance</h3>
   <ul>
-    <li>Lorem ipsum funcional 1…</li>
-    <li>Lorem ipsum funcional 2…</li>
-    <li>Lorem ipsum funcional 3…</li>
+    <li>Objetivo general: Lorem ipsum dolor sit amet…</li>
+    <li>Objetivos específicos: Lorem ipsum dolor sit amet…</li>
   </ul>
 
-  <h3>No funcionales</h3>
+  <hr>
+
+  <h3>Requerimientos Funcionales</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+      <tr>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">ID</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Descripción</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Criticidad</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Criterios de Aceptación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:.5rem;">RF-01</td>
+        <td style="padding:.5rem;">El sistema deberá permitir registrar mensajes de contacto.</td>
+        <td style="padding:.5rem;">Alta</td>
+        <td style="padding:.5rem;">Dado un usuario, cuando completa el formulario válido, entonces el mensaje se almacena en DB.</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem;">RF-02</td>
+        <td style="padding:.5rem;">El sistema listará los mensajes creados ordenados por fecha.</td>
+        <td style="padding:.5rem;">Media</td>
+        <td style="padding:.5rem;">Dado mensajes existentes, cuando visito /mensajes, entonces se visualizan en tabla.</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem;">RF-03</td>
+        <td style="padding:.5rem;">El sistema permitirá eliminar un mensaje por su identificador.</td>
+        <td style="padding:.5rem;">Media</td>
+        <td style="padding:.5rem;">Dado un mensaje, cuando hago clic en “Eliminar”, entonces el registro desaparece y se notifica.</td>
+      </tr>
+      <!-- Agrega más filas según tu proyecto -->
+    </tbody>
+  </table>
+
+  <h3>Requerimientos No Funcionales</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+      <tr>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">ID</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Categoría</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Descripción</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Métrica</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:.5rem;">RNF-01</td>
+        <td style="padding:.5rem;">Usabilidad</td>
+        <td style="padding:.5rem;">El formulario mostrará validaciones en cliente en tiempo real.</td>
+        <td style="padding:.5rem;">Contadores de caracteres, mensajes de error y bloqueo si hay campos inválidos.</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem;">RNF-02</td>
+        <td style="padding:.5rem;">Compatibilidad</td>
+        <td style="padding:.5rem;">La wiki deberá visualizarse correctamente en Chrome, Safari, Edge y Firefox.</td>
+        <td style="padding:.5rem;">Pruebas manuales en los cuatro navegadores.</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem;">RNF-03</td>
+        <td style="padding:.5rem;">Mantenibilidad</td>
+        <td style="padding:.5rem;">El menú será un fragmento Thymeleaf reutilizable.</td>
+        <td style="padding:.5rem;">Agregar un ítem sin editar otras vistas.</td>
+      </tr>
+      <!-- Agrega más filas según tu proyecto -->
+    </tbody>
+  </table>
+
+  <h3>Suposiciones y Dependencias</h3>
   <ul>
-    <li>Rendimiento esperado: Lorem ipsum…</li>
-    <li>Seguridad: Lorem ipsum…</li>
-    <li>Mantenibilidad: Lorem ipsum…</li>
+    <li>Base de datos PostgreSQL accesible localmente.</li>
+    <li>Despliegue final vía K8s + Jenkins según sesión de clase.</li>
   </ul>
 </section>
 </body>

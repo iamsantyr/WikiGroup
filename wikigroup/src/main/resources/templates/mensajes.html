@@ -7,47 +7,54 @@
 </head>
 <body>
 <section>
-  <h2>Mensajes recibidos</h2>
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+    <h2 style="margin:0;">Mensajes recibidos</h2>
+    <div style="display:flex; gap:.5rem;">
+      <a th:href="@{/mensajes/export.csv}" class="btn-secondary" style="text-decoration:none; display:inline-block; padding:.5rem .75rem; border:1px solid #d1d5db; border-radius:.45rem;">
+        Exportar CSV
+      </a>
+      <a th:href="@{/contacto}" class="btn" style="text-decoration:none; display:inline-block; padding:.5rem .75rem; background:#4f46e5; color:#fff; border-radius:.45rem;">
+        Nuevo mensaje
+      </a>
+    </div>
+  </div>
 
   <div th:if="${okMsg}" class="ok" th:text="${okMsg}" style="color:#0a7b28; margin:.5rem 0;"></div>
   <div th:if="${errorMsg}" class="error" th:text="${errorMsg}" style="color:#c00; margin:.5rem 0;"></div>
 
-  <div th:if="${#lists.isEmpty(items)}">
+  <div th:if="${#lists.isEmpty(items)}" style="margin-top:1rem;">
     <p>No hay mensajes registrados aún.</p>
     <p><a th:href="@{/contacto}">Ir al formulario de contacto →</a></p>
   </div>
 
-  <div th:unless="${#lists.isEmpty(items)}" style="overflow-x:auto;">
-    <table style="width:100%; border-collapse:collapse;">
+  <div th:unless="${#lists.isEmpty(items)}" style="overflow-x:auto; margin-top:1rem;">
+    <table>
       <thead>
       <tr>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">ID</th>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Fecha</th>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Nombres</th>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Apellidos</th>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Correo</th>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Semestre</th>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Descripción</th>
-        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Acciones</th>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Correo</th>
+        <th>Semestre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="c : ${items}">
-        <td style="border-bottom:1px solid #eee;padding:.5rem;" th:text="${c.id}">1</td>
-        <td style="border-bottom:1px solid #eee;padding:.5rem;"
-            th:text="${#temporals.format(c.createdAt, 'yyyy-MM-dd HH:mm')}">2025-08-14 14:30</td>
-        <td style="border-bottom:1px solid #eee;padding:.5rem;" th:text="${c.nombres}">NOMBRES</td>
-        <td style="border-bottom:1px solid #eee;padding:.5rem;" th:text="${c.apellidos}">APELLIDOS</td>
-        <td style="border-bottom:1px solid #eee;padding:.5rem;" th:text="${c.correo}">CORREO</td>
-        <td style="border-bottom:1px solid #eee;padding:.5rem;" th:text="${c.semestre}">0</td>
-        <td style="border-bottom:1px solid #eee;padding:.5rem;" th:text="${c.descripcion}">TEXTO…</td>
-        <td style="border-bottom:1px solid #eee;padding:.5rem;">
+        <td th:text="${c.id}">1</td>
+        <td th:text="${#temporals.format(c.createdAt, 'yyyy-MM-dd HH:mm')}">2025-08-14 14:30</td>
+        <td th:text="${c.nombres}">NOMBRES</td>
+        <td th:text="${c.apellidos}">APELLIDOS</td>
+        <td th:text="${c.correo}">CORREO</td>
+        <td th:text="${c.semestre}">0</td>
+        <td th:text="${c.descripcion}">TEXTO…</td>
+        <td>
           <form th:action="@{|/mensajes/${c.id}/eliminar|}" method="post"
                 onsubmit="return confirm('¿Eliminar el mensaje #'+this.dataset.id+'?');"
                 th:attr="data-id=${c.id}">
-            <button type="submit" style="background:#c00;color:#fff;border:none;padding:.4rem .6rem;border-radius:.3rem;cursor:pointer;">
-              Eliminar
-            </button>
+            <button type="submit">Eliminar</button>
           </form>
         </td>
       </tr>
@@ -55,9 +62,6 @@
     </table>
   </div>
 
-  <p style="margin-top:1rem;">
-    <a th:href="@{/contacto}">← Volver al formulario</a>
-  </p>
 </section>
 </body>
 </html>

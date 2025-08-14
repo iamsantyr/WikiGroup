@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{_fragments/layout :: layout(~{::section})}">
-<head></head>
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Equipo'">Equipo</title>
+</head>
 <body>
 <section>
-  <h2>Presentación del equipo</h2>
-  <p><strong>Nombre del equipo:</strong> Lorem Ipsum Team</p>
+  <h2>Presentación del Equipo</h2>
+  <p><em>(Textos realizados por el equipo)</em> — Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+  <h3>Nombre del Equipo</h3>
+  <p><strong>WikiGroup</strong> (placeholder).</p>
+
   <h3>Integrantes</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+    <tr>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Nombre</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Rol</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Lenguajes/Stack</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Perfil técnico (breve)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="padding:.5rem;">Nombre 1</td>
+      <td style="padding:.5rem;">Líder técnico</td>
+      <td style="padding:.5rem;">Java, Spring Boot, SQL</td>
+      <td style="padding:.5rem;">Lorem ipsum dolor sit amet…</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">Nombre 2</td>
+      <td style="padding:.5rem;">Líder planeación</td>
+      <td style="padding:.5rem;">HTML/CSS/JS, Git</td>
+      <td style="padding:.5rem;">Lorem ipsum dolor sit amet…</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">Nombre 3</td>
+      <td style="padding:.5rem;">Líder de pruebas</td>
+      <td style="padding:.5rem;">JUnit, Selenium</td>
+      <td style="padding:.5rem;">Lorem ipsum dolor sit amet…</td>
+    </tr>
+    <!-- Agrega más integrantes según el equipo -->
+    </tbody>
+  </table>
+
+  <h3>Comunicaciones</h3>
   <ul>
-    <li>Nombre 1 — Rol (líder técnico) — Lenguajes: Java, JS — Perfil: Lorem ipsum…</li>
-    <li>Nombre 2 — Rol (líder planeación) — Lenguajes: Java, Python — Perfil: Lorem ipsum…</li>
-    <li>Nombre 3 — Rol (líder de pruebas) — Lenguajes: JS, TS — Perfil: Lorem ipsum…</li>
+    <li>Repositorio: <a href="https://github.com/iamsantyr/WikiGroup" target="_blank" rel="noopener">GitHub</a></li>
+    <li>Canales: Lorem ipsum (Slack/Discord/Teams).</li>
+    <li>Rituales: dailies, planning, review, retro.</li>
+  </ul>
+
+  <h3>Definición de Hecho (DoD)</h3>
+  <ul>
+    <li>Código compilado y con pruebas básicas ✅</li>
+    <li>Documentación en la wiki actualizada ✅</li>
+    <li>Revisión por pares (PR aprobado) ✅</li>
+    <li>Despliegue en entorno de prueba ✅</li>
   </ul>
 </section>
 </body>

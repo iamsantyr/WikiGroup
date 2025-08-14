@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_fragments/layout :: layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Pruebas'">Pruebas</title>
+</head>
+<body>
+<section>
+  <h2>Pruebas del Proyecto</h2>
+  <p><em>(Textos realizados por el equipo)</em> — Esta sección documenta los casos de prueba de frontend y backend.</p>
+
+  <h3>1. Pruebas Frontend (Formulario Contáctenos)</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+    <tr>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">ID</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Escenario</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Pasos</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Resultado Esperado</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Resultado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="padding:.5rem;">PF-01</td>
+      <td style="padding:.5rem;">Contadores de caracteres</td>
+      <td style="padding:.5rem;">Abrir /contacto, escribir en Nombres/Apellidos/Descripción.</td>
+      <td style="padding:.5rem;">Los contadores muestran <code>escritos/máximo</code> y no permite exceder el máximo.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">PF-02</td>
+      <td style="padding:.5rem;">Normalización a MAYÚSCULAS (sin tildes/ñ)</td>
+      <td style="padding:.5rem;">Escribir “José Ñuñez”.</td>
+      <td style="padding:.5rem;">Se muestra “JOSE NUNEZ”.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">PF-03</td>
+      <td style="padding:.5rem;">Correo sin espacios y con @ y punto</td>
+      <td style="padding:.5rem;">Escribir “mail sin espacios @gmail .com”.</td>
+      <td style="padding:.5rem;">Marca en rojo y muestra mensaje “Correo inválido…”.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">PF-04</td>
+      <td style="padding:.5rem;">Semestre 0–16</td>
+      <td style="padding:.5rem;">Ingresar -1 o 17.</td>
+      <td style="padding:.5rem;">Marca en rojo y bloquea envío.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">PF-05</td>
+      <td style="padding:.5rem;">Bloqueo de envío con campos inválidos</td>
+      <td style="padding:.5rem;">Dejar vacíos o con error y presionar Enviar.</td>
+      <td style="padding:.5rem;">Aparece alerta “Revisa los campos en rojo.” y no se envía.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>2. Pruebas Backend (Validaciones y Persistencia)</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+    <tr>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">ID</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Caso</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Entrada</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Resultado Esperado</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Resultado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="padding:.5rem;">PB-01</td>
+      <td style="padding:.5rem;">Correo inválido</td>
+      <td style="padding:.5rem;">correo = "SIN@PUNTO"</td>
+      <td style="padding:.5rem;">Bean Validation rechaza con mensaje de patrón.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">PB-02</td>
+      <td style="padding:.5rem;">Semestre fuera de rango</td>
+      <td style="padding:.5rem;">semestre = -1 / 17</td>
+      <td style="padding:.5rem;">Rechazo por @Min/@Max.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">PB-03</td>
+      <td style="padding:.5rem;">Persistencia exitosa</td>
+      <td style="padding:.5rem;">Todos válidos</td>
+      <td style="padding:.5rem;">Registro aparece en tabla <code>contacto</code>.</td>
+      <td style="padding:.5rem;">OK / FALLA</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>3. Evidencias</h3>
+  <ul>
+    <li>Capturas de pantalla de pruebas en Chrome, Safari, Edge y Firefox.</li>
+    <li>Consultas en PostgreSQL verificando registros.</li>
+  </ul>
+
+  <h3>4. (Opcional) Pruebas Automatizadas</h3>
+  <p>
+    Se recomienda crear pruebas con <strong>JUnit</strong> para validaciones y repositorio. Estructura sugerida:
+  </p>
+  <pre style="background:#f6f8fa;padding:1rem;overflow:auto;">
+src/test/java/com/wikigroup/
+  ├─ controllers/ContactoControllerTests.java
+  ├─ repositories/ContactoRepositoryTests.java
+  └─ models/ContactoValidationTests.java
+  </pre>
+</section>
+</body>
+</html>

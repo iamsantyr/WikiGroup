@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_fragments/layout :: layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Para desarrollo'">Para desarrollo</title>
+</head>
+<body>
+<section>
+  <h2>Para desarrollo — Descripción de Endpoints</h2>
+
+  <p>Esta sección resume los endpoints disponibles en la aplicación, su propósito y ejemplos de uso.</p>
+
+  <h3>Endpoints Web (Thymeleaf)</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+    <tr>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Método</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Ruta</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Descripción</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Controlador</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Vista</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/</td>
+      <td style="padding:.5rem;">Redirección hacia <code>/proyecto</code></td>
+      <td style="padding:.5rem;">WikiController#root</td>
+      <td style="padding:.5rem;">—</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/proyecto</td>
+      <td style="padding:.5rem;">Página de descripción del proyecto</td>
+      <td style="padding:.5rem;">WikiController#proyecto</td>
+      <td style="padding:.5rem;">proyecto.html</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/equipo</td>
+      <td style="padding:.5rem;">Presentación del equipo</td>
+      <td style="padding:.5rem;">WikiController#equipo</td>
+      <td style="padding:.5rem;">equipo.html</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/requerimientos</td>
+      <td style="padding:.5rem;">Requerimientos funcionales y no funcionales</td>
+      <td style="padding:.5rem;">WikiController#requerimientos</td>
+      <td style="padding:.5rem;">requerimientos.html</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/arquitectura</td>
+      <td style="padding:.5rem;">Arquitectura y diagramas C4</td>
+      <td style="padding:.5rem;">WikiController#arquitectura</td>
+      <td style="padding:.5rem;">arquitectura.html</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/despliegue</td>
+      <td style="padding:.5rem;">Versiones y pipeline</td>
+      <td style="padding:.5rem;">WikiController#despliegue</td>
+      <td style="padding:.5rem;">despliegue.html</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/contacto</td>
+      <td style="padding:.5rem;">Formulario de contacto con validaciones</td>
+      <td style="padding:.5rem;">ContactoController#form</td>
+      <td style="padding:.5rem;">contacto.html</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">POST</td>
+      <td style="padding:.5rem;">/contacto</td>
+      <td style="padding:.5rem;">Procesa el envío del formulario y guarda en DB</td>
+      <td style="padding:.5rem;">ContactoController#submit</td>
+      <td style="padding:.5rem;">redirect:/contacto</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">GET</td>
+      <td style="padding:.5rem;">/mensajes</td>
+      <td style="padding:.5rem;">Listado de mensajes recibidos</td>
+      <td style="padding:.5rem;">ContactoController#mensajes</td>
+      <td style="padding:.5rem;">mensajes.html</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">POST</td>
+      <td style="padding:.5rem;">/mensajes/{id}/eliminar</td>
+      <td style="padding:.5rem;">Elimina un mensaje por ID</td>
+      <td style="padding:.5rem;">ContactoController#eliminar</td>
+      <td style="padding:.5rem;">redirect:/mensajes</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h3>Ejemplos de uso (curl)</h3>
+  <p><strong>Enviar formulario de contacto:</strong></p>
+  <pre style="background:#f6f8fa;padding:1rem;overflow:auto;">
+curl -X POST http://localhost:8080/contacto \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "nombres=JUAN" \
+  --data-urlencode "apellidos=PEREZ" \
+  --data-urlencode "correo=JUAN.PEREZ@EJEMPLO.COM" \
+  --data-urlencode "semestre=5" \
+  --data-urlencode "descripcion=MENSAJE DE PRUEBA"
+  </pre>
+
+  <p><strong>Eliminar mensaje con ID 3:</strong></p>
+  <pre style="background:#f6f8fa;padding:1rem;overflow:auto;">
+curl -X POST http://localhost:8080/mensajes/3/eliminar
+  </pre>
+
+  <h3>Notas técnicas</h3>
+  <ul>
+    <li>Validaciones en cliente: JavaScript (contadores, mayúsculas sin tildes/ñ, correo, rangos).</li>
+    <li>Validaciones en servidor: Bean Validation (Jakarta), mensajes en <code>messages.properties</code> (opcional).</li>
+    <li>Persistencia: Spring Data JPA → PostgreSQL.</li>
+    <li>Plantillas: Thymeleaf + layout y fragmentos.</li>
+  </ul>
+</section>
+</body>
+</html>

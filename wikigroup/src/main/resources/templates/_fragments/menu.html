@@ -1,68 +1,53 @@
 <nav th:fragment="menu" class="site-nav" xmlns:th="http://www.thymeleaf.org">
-  <ul style="list-style:none; padding:0; margin:.5rem 0; display:flex; gap:1rem;">
+  <ul class="nav-list">
+    <li><a th:href="@{/}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI == '/'} ? 'active' : ''">
+      Inicio
+    </a></li>
 
-    <!-- Inicio -->
-    <li>
-      <a th:href="@{/}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI == '/'} ? 'active' : ''">
-        Inicio
-      </a>
-    </li>
+    <li><a th:href="@{/equipo}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/equipo')} ? 'active' : ''">
+      Equipo
+    </a></li>
 
-    <!-- Equipo -->
-    <li>
-      <a th:href="@{/equipo}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/equipo')} ? 'active' : ''">
-        Equipo
-      </a>
-    </li>
+    <li><a th:href="@{/proyecto}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/proyecto')} ? 'active' : ''">
+      Proyecto
+    </a></li>
 
-    <!-- Proyecto -->
-    <li>
-      <a th:href="@{/proyecto}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/proyecto')} ? 'active' : ''">
-        Proyecto
-      </a>
-    </li>
+    <li><a th:href="@{/requerimientos}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/requerimientos')} ? 'active' : ''">
+      Requerimientos
+    </a></li>
 
-    <!-- Requerimientos -->
-    <li>
-      <a th:href="@{/requerimientos}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/requerimientos')} ? 'active' : ''">
-        Requerimientos
-      </a>
-    </li>
+    <li><a th:href="@{/arquitectura}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/arquitectura')} ? 'active' : ''">
+      Arquitectura
+    </a></li>
 
-    <!-- Arquitectura -->
-    <li>
-      <a th:href="@{/arquitectura}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/arquitectura')} ? 'active' : ''">
-        Arquitectura
-      </a>
-    </li>
+    <li><a th:href="@{/despliegue}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/despliegue')} ? 'active' : ''">
+      Despliegue
+    </a></li>
 
-    <!-- Despliegue -->
-    <li>
-      <a th:href="@{/despliegue}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/despliegue')} ? 'active' : ''">
-        Despliegue
-      </a>
-    </li>
+    <li><a th:href="@{/desarrollo}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/desarrollo')} ? 'active' : ''">
+      Desarrollo
+    </a></li>
 
-    <!-- Contacto -->
-    <li>
-      <a th:href="@{/contacto}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/contacto')} ? 'active' : ''">
-        Contáctenos
-      </a>
-    </li>
+    <li><a th:href="@{/pruebas}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/pruebas')} ? 'active' : ''">
+      Pruebas
+    </a></li>
 
-    <!-- Mensajes -->
-    <li>
-      <a th:href="@{/mensajes}"
-         th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/mensajes')} ? 'active' : ''">
-        Mensajes
-      </a>
-    </li>
+    <li><a th:href="@{/contacto}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/contacto')} ? 'active' : ''">
+      Contáctenos
+    </a></li>
+
+    <li><a th:href="@{/mensajes}"
+           th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/mensajes')} ? 'active' : ''">
+      Mensajes
+    </a></li>
   </ul>
 </nav>

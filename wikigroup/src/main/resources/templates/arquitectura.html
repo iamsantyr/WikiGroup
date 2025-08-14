@@ -1,26 +1,125 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{_fragments/layout :: layout(~{::section})}">
-<head></head>
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Arquitectura'">Arquitectura</title>
+</head>
 <body>
 <section>
-  <h2>Arquitectura del proyecto</h2>
-  <p>Diagramas C4 (contexto, contenedores, componentes) y despliegue.</p>
+  <h2>Arquitectura del Proyecto</h2>
+  <p>
+    <em>(Texto base del profesor, complementado por el equipo)</em> — Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit. Ut elementum pharetra lorem, vitae bibendum neque semper eget.
+  </p>
 
-  <h3>Diagrama de contexto</h3>
-  <p>Lorem ipsum… (puedes insertar imágenes exportadas de Mermaid/PlantUML)</p>
+  <hr>
 
-  <h3>Diagrama del contenedor</h3>
-  <p>Lorem ipsum…</p>
+  <h3>Diagramas C4</h3>
 
-  <h3>Diagrama de componentes</h3>
-  <p>Lorem ipsum…</p>
+  <h4>1. Diagrama de Contexto</h4>
+  <p>Relaciones de alto nivel entre el sistema y los actores externos.</p>
+  <figure style="margin:0 0 1rem;">
+    <!-- Reemplaza 'c4-context.png' por tu imagen -->
+    <img th:src="@{/img/c4-context.png}" alt="C4 - Contexto" style="max-width:100%;height:auto;">
+    <figcaption>Figura 1 — C4: Contexto (placeholder). Exporta tu diagrama y colócalo en <code>static/img/</code>.</figcaption>
+  </figure>
 
-  <h3>Modelo Entidad/Relación + Diccionario</h3>
-  <p>Lorem ipsum…</p>
+  <h4>2. Diagrama de Contenedores</h4>
+  <p>Componentes desplegables: cliente web, backend Spring Boot, base de datos, etc.</p>
+  <figure style="margin:0 0 1rem;">
+    <img th:src="@{/img/c4-containers.png}" alt="C4 - Contenedores" style="max-width:100%;height:auto;">
+    <figcaption>Figura 2 — C4: Contenedores (placeholder).</figcaption>
+  </figure>
 
-  <h3>Diagrama de despliegue</h3>
-  <p>Lorem ipsum…</p>
+  <h4>3. Diagrama de Componentes</h4>
+  <p>Módulos internos: controladores, servicios, repositorios, vistas Thymeleaf.</p>
+  <figure style="margin:0 0 1rem;">
+    <img th:src="@{/img/c4-components.png}" alt="C4 - Componentes" style="max-width:100%;height:auto;">
+    <figcaption>Figura 3 — C4: Componentes (placeholder).</figcaption>
+  </figure>
+
+  <hr>
+
+  <h3>Modelo de Datos</h3>
+
+  <h4>Modelo Entidad/Relación</h4>
+  <figure style="margin:0 0 1rem;">
+    <img th:src="@{/img/er-model.png}" alt="Modelo ER" style="max-width:100%;height:auto;">
+    <figcaption>Figura 4 — Modelo ER (placeholder).</figcaption>
+  </figure>
+
+  <h4>Diccionario de Datos (extracto)</h4>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+    <tr>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Tabla</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Campo</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Tipo</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Restricciones / Descripción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="padding:.5rem;">contacto</td>
+      <td style="padding:.5rem;">id</td>
+      <td style="padding:.5rem;">BIGINT (PK)</td>
+      <td style="padding:.5rem;">Identificador autogenerado.</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">contacto</td>
+      <td style="padding:.5rem;">nombres</td>
+      <td style="padding:.5rem;">VARCHAR(100)</td>
+      <td style="padding:.5rem;">Obligatorio, mayúsculas sin tildes/ñ.</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">contacto</td>
+      <td style="padding:.5rem;">apellidos</td>
+      <td style="padding:.5rem;">VARCHAR(100)</td>
+      <td style="padding:.5rem;">Obligatorio, mayúsculas sin tildes/ñ.</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">contacto</td>
+      <td style="padding:.5rem;">correo</td>
+      <td style="padding:.5rem;">VARCHAR(100)</td>
+      <td style="padding:.5rem;">Obligatorio, formato con “@” y punto; sin espacios; mayúsculas.</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">contacto</td>
+      <td style="padding:.5rem;">semestre</td>
+      <td style="padding:.5rem;">INTEGER</td>
+      <td style="padding:.5rem;">Obligatorio, rango 0–16.</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">contacto</td>
+      <td style="padding:.5rem;">descripcion</td>
+      <td style="padding:.5rem;">TEXT</td>
+      <td style="padding:.5rem;">Obligatorio, mayúsculas sin tildes/ñ, máximo 1000 (cliente).</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">contacto</td>
+      <td style="padding:.5rem;">created_at</td>
+      <td style="padding:.5rem;">TIMESTAMP WITH TIME ZONE</td>
+      <td style="padding:.5rem;">Se establece automáticamente al persistir.</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h3>Diagrama de Despliegue</h3>
+  <p>Topología objetivo (local / K8s + Jenkins + Apache/Tomcat según la práctica):</p>
+  <figure style="margin:0 0 1rem;">
+    <img th:src="@{/img/deployment.png}" alt="Diagrama de despliegue" style="max-width:100%;height:auto;">
+    <figcaption>Figura 5 — Diagrama de Despliegue (placeholder).</figcaption>
+  </figure>
+
+  <h4>Notas</h4>
+  <ul>
+    <li>La wiki se empaqueta y publica en el repositorio.</li>
+    <li>La sesión de despliegue usará Kubernetes y Jenkins según lineamientos del profesor.</li>
+    <li>Para la revisión, la wiki se servirá en Apache (estático o reverso a la app).</li>
+  </ul>
 </section>
 </body>
 </html>

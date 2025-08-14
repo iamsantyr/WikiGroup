@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WikiController {
 
-  // Redirige el inicio a /proyecto (cámbialo a /equipo si prefieres)
+  // Redirige el inicio a /proyecto (puedes cambiar a /equipo si prefieres)
   @GetMapping("/")
   public String root() {
     return "redirect:/proyecto";
@@ -34,17 +34,31 @@ public class WikiController {
     return "requerimientos";
   }
 
-  // Arquitectura
+  // Arquitectura (C4, ER, despliegue)
   @GetMapping("/arquitectura")
   public String arquitectura(Model model) {
     model.addAttribute("pageTitle", "Arquitectura");
     return "arquitectura";
   }
 
-  // Despliegue
+  // Despliegue (versiones, pipeline, apache)
   @GetMapping("/despliegue")
   public String despliegue(Model model) {
     model.addAttribute("pageTitle", "Despliegue");
     return "despliegue";
+  }
+
+  // Para desarrollo (descripciones de endpoints)
+  @GetMapping("/desarrollo")
+  public String desarrollo(Model model) {
+    model.addAttribute("pageTitle", "Para desarrollo");
+    return "desarrollo";
+  }
+
+  // Pruebas (frontend y backend)
+  @GetMapping("/pruebas")
+  public String pruebas(Model model) {
+    model.addAttribute("pageTitle", "Pruebas");
+    return "pruebas";
   }
 }

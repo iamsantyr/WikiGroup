@@ -1,12 +1,93 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{_fragments/layout :: layout(~{::section})}">
-<head></head>
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Proyecto'">Proyecto</title>
+</head>
 <body>
 <section>
-  <h2>Descripción del proyecto</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod…</p>
-  <p><em>(Texto del profesor complementado por el equipo)</em></p>
+  <h2>Descripción del Proyecto</h2>
+  <p>
+    <em>(Texto base del profesor, complementado por el equipo)</em> — Lorem ipsum dolor sit amet, consectetur
+    adipiscing elit. Morbi gravida, nisl nec interdum elementum, urna mi feugiat lectus, vitae placerat nunc arcu quis dui.
+  </p>
+
+  <h3>Objetivos</h3>
+  <ul>
+    <li><strong>General:</strong> Lorem ipsum dolor sit amet…</li>
+    <li><strong>Específicos:</strong>
+      <ul>
+        <li>OE1: Lorem ipsum dolor sit amet…</li>
+        <li>OE2: Lorem ipsum dolor sit amet…</li>
+        <li>OE3: Lorem ipsum dolor sit amet…</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Alcance</h3>
+  <ul>
+    <li>Incluye: Wiki del equipo con páginas de documentación, formulario de contacto, listado, etc.</li>
+    <li>Excluye: Autenticación/roles avanzados, microservicios, etc. (según alcance del curso).</li>
+  </ul>
+
+  <h3>Entregables</h3>
+  <ul>
+    <li>Repositorio con el código fuente (HTML/CSS/JS + Thymeleaf + Spring Boot + PostgreSQL).</li>
+    <li>Wiki navegable (Apache/K8s+Jenkins según práctica).</li>
+    <li>Diagramas C4, ER, despliegue.</li>
+    <li>Caso de pruebas (frontend y backend).</li>
+  </ul>
+
+  <h3>Cronograma (Placeholder)</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+      <tr>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Hito</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Fecha</th>
+        <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:.5rem;">Kickoff</td>
+        <td style="padding:.5rem;">YYYY-MM-DD</td>
+        <td style="padding:.5rem;">Alineación de requerimientos y alcance.</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem;">Alpha</td>
+        <td style="padding:.5rem;">YYYY-MM-DD</td>
+        <td style="padding:.5rem;">Estructura base + formulario contacto.</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem;">Beta</td>
+        <td style="padding:.5rem;">YYYY-MM-DD</td>
+        <td style="padding:.5rem;">Listado, eliminar, documentación de endpoints.</td>
+      </tr>
+      <tr>
+        <td style="padding:.5rem;">Sustentación</td>
+        <td style="padding:.5rem;">YYYY-MM-DD</td>
+        <td style="padding:.5rem;">Despliegue y demo final.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Riesgos y Mitigaciones (Placeholder)</h3>
+  <ul>
+    <li>Riesgo: Problemas de permisos en DB. Mitigación: checklist de roles y grants.</li>
+    <li>Riesgo: Errores de layout Thymeleaf. Mitigación: patrón de “content primero” y fragmentos probados.</li>
+    <li>Riesgo: Retrasos en despliegue. Mitigación: definir pipeline simple y probado localmente.</li>
+  </ul>
+
+  <h3>Enlaces</h3>
+  <ul>
+    <li>Repositorio: <a href="https://github.com/iamsantyr/WikiGroup" target="_blank" rel="noopener">GitHub</a></li>
+    <li>Contacto: <a th:href="@{/contacto}">/contacto</a></li>
+    <li>Mensajes: <a th:href="@{/mensajes}">/mensajes</a></li>
+    <li>Arquitectura: <a th:href="@{/arquitectura}">/arquitectura</a></li>
+    <li>Requerimientos: <a th:href="@{/requerimientos}">/requerimientos</a></li>
+    <li>Despliegue: <a th:href="@{/despliegue}">/despliegue</a></li>
+  </ul>
 </section>
 </body>
 </html>

@@ -1,21 +1,128 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{_fragments/layout :: layout(~{::section})}">
-<head></head>
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Despliegue'">Despliegue</title>
+</head>
 <body>
 <section>
   <h2>Despliegue</h2>
+  <p>
+    <em>(Texto base del profesor, complementado por el equipo)</em> — Esta sección describe versiones, entornos y
+    el pipeline de CI/CD (Jenkins + Kubernetes). Para la sustentación, el profesor desplegará la wiki en Apache.
+  </p>
+
+  <hr>
+
   <h3>Versiones</h3>
-  <ul>
-    <li>v0.1.0 — Scaffold inicial — Fecha: Lorem ipsum</li>
-    <li>v0.2.0 — Wiki básica — Fecha: Lorem ipsum</li>
-  </ul>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+    <tr>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Versión</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Fecha</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Cambios relevantes</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Tag/Commit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="padding:.5rem;">v0.1.0</td>
+      <td style="padding:.5rem;">YYYY-MM-DD</td>
+      <td style="padding:.5rem;">Inicial: layout, menú, páginas base.</td>
+      <td style="padding:.5rem;"><code>refs/tags/v0.1.0</code></td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">v0.2.0</td>
+      <td style="padding:.5rem;">YYYY-MM-DD</td>
+      <td style="padding:.5rem;">Formulario Contáctenos + PostgreSQL.</td>
+      <td style="padding:.5rem;"><code>refs/tags/v0.2.0</code></td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">v0.3.0</td>
+      <td style="padding:.5rem;">YYYY-MM-DD</td>
+      <td style="padding:.5rem;">Listado /mensajes y Eliminar.</td>
+      <td style="padding:.5rem;"><code>refs/tags/v0.3.0</code></td>
+    </tr>
+    <!-- Agrega más filas según avances -->
+    </tbody>
+  </table>
 
-  <h3>Pipeline (K8S + Jenkins)</h3>
-  <p>Lorem ipsum… (describe build → test → package → push → deploy)</p>
+  <h3>Entornos</h3>
+  <table style="width:100%; border-collapse:collapse; margin-bottom:1rem;">
+    <thead>
+    <tr>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Entorno</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">URL</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Propósito</th>
+      <th style="text-align:left;border-bottom:1px solid #ddd;padding:.5rem;">Notas</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td style="padding:.5rem;">Local</td>
+      <td style="padding:.5rem;"><code>http://localhost:8080/</code></td>
+      <td style="padding:.5rem;">Desarrollo.</td>
+      <td style="padding:.5rem;">Spring Boot con DevTools opcional.</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">Apache</td>
+      <td style="padding:.5rem;">—</td>
+      <td style="padding:.5rem;">Revisión del profesor (estático o reverse proxy).</td>
+      <td style="padding:.5rem;">Sube /templates y /static según instrucciones de la práctica.</td>
+    </tr>
+    <tr>
+      <td style="padding:.5rem;">Kubernetes</td>
+      <td style="padding:.5rem;">—</td>
+      <td style="padding:.5rem;">Sustentación final (vía Jenkins).</td>
+      <td style="padding:.5rem;">Deployment + Service + Ingress.</td>
+    </tr>
+    </tbody>
+  </table>
 
-  <h3>Apache (revisión del profe)</h3>
-  <p>Lorem ipsum… (cómo servir: proxy al jar o WAR en Tomcat)</p>
+  <h3>Pipeline CI/CD (Jenkins → K8s)</h3>
+  <ol>
+    <li><strong>Build</strong>: compilar proyecto (Maven) y ejecutar pruebas.</li>
+    <li><strong>Empaquetado</strong>: <code>jar</code> Spring Boot.</li>
+    <li><strong>Imagen Docker</strong>: construir y etiquetar <code>wikigroup:VERSION</code>.</li>
+    <li><strong>Push</strong> a registry (Docker Hub / GHCR).</li>
+    <li><strong>Deploy</strong> en Kubernetes (kubectl apply / helm upgrade).</li>
+  </ol>
+
+  <h4>Jenkinsfile (borrador de referencia)</h4>
+  <pre style="background:#f6f8fa;padding:1rem;overflow:auto;">
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') { steps { checkout scm } }
+    stage('Build')    { steps { sh './mvnw -ntp clean package -DskipTests=false' } }
+    stage('Docker')   { steps { sh 'docker build -t &lt;registry&gt;/wikigroup:${BUILD_NUMBER} .' } }
+    stage('Push')     { steps { sh 'docker push &lt;registry&gt;/wikigroup:${BUILD_NUMBER}' } }
+    stage('Deploy')   { steps { sh 'kubectl apply -f k8s/' } }
+  }
+}
+  </pre>
+
+  <h3>Configuración en Apache (guía rápida)</h3>
+  <p>Para servir la wiki estática (si aplica), habilita un VirtualHost apuntando al directorio:</p>
+  <pre style="background:#f6f8fa;padding:1rem;overflow:auto;">
+&lt;VirtualHost *:80&gt;
+  ServerName wikigroup.local
+  DocumentRoot /var/www/wikigroup
+  &lt;Directory "/var/www/wikigroup"&gt;
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+  </pre>
+
+  <p>Si es reverse proxy hacia Spring Boot:</p>
+  <pre style="background:#f6f8fa;padding:1rem;overflow:auto;">
+ProxyPass        "/" "http://localhost:8080/"
+ProxyPassReverse "/" "http://localhost:8080/"
+  </pre>
+
 </section>
 </body>
 </html>
