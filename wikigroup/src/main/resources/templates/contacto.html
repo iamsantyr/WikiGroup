@@ -1,12 +1,141 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{_fragments/layout :: layout(~{::section})}">
-<head></head>
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Contáctenos'">Contáctenos</title>
+</head>
 <body>
 <section>
   <h2>Contáctenos</h2>
-  <p>En esta página irá el formulario con validaciones (nombres, apellidos, correo, semestre, descripción) y guardado en la base de datos.</p>
-  <p>Mientras tanto, contenido temporal: Lorem ipsum…</p>
+
+  <!-- Mensajes flash -->
+  <div th:if="${okMsg}" class="ok" th:text="${okMsg}"></div>
+  <div th:if="${errorMsg}" class="error" th:text="${errorMsg}"></div>
+
+  <form th:action="@{/contacto}" th:object="${contacto}" method="post" id="contactForm" novalidate>
+    <!-- Nombres -->
+    <div class="field">
+      <label for="nombres">Nombres (máx 100) *</label>
+      <input id="nombres" th:field="*{nombres}" maxlength="100" required />
+      <small id="nombresCount">0/100</small>
+      <small class="error" th:if="${#fields.hasErrors('nombres')}" th:errors="*{nombres}">Error</small>
+    </div>
+
+    <!-- Apellidos -->
+    <div class="field">
+      <label for="apellidos">Apellidos (máx 100) *</label>
+      <input id="apellidos" th:field="*{apellidos}" maxlength="100" required />
+      <small id="apellidosCount">0/100</small>
+      <small class="error" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}">Error</small>
+    </div>
+
+    <!-- Correo -->
+    <div class="field">
+      <label for="correo">Correo (máx 100) *</label>
+      <input id="correo" th:field="*{correo}" maxlength="100" required />
+      <small id="correoError" class="error"></small>
+      <small class="error" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Error</small>
+    </div>
+
+    <!-- Semestre -->
+    <div class="field">
+      <label for="semestre">Semestre (0–16) *</label>
+      <input id="semestre" th:field="*{semestre}" type="number" min="0" max="16" required />
+      <small id="semestreError" class="error"></small>
+      <small class="error" th:if="${#fields.hasErrors('semestre')}" th:errors="*{semestre}">Error</small>
+    </div>
+
+    <!-- Descripción -->
+    <div class="field">
+      <label for="descripcion">Descripción (máx 1000) *</label>
+      <textarea id="descripcion" th:field="*{descripcion}" maxlength="1000" required></textarea>
+      <small id="descripcionCount">0/1000</small>
+      <small class="error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error</small>
+    </div>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p style="margin-top:1rem;"><a th:href="@{/contacto/admin}">Ver listado de contactos →</a></p>
+
+  <style>
+    .field { margin-bottom: .9rem; display: flex; flex-direction: column; max-width: 560px; }
+    .error { color: #c00; font-size: .86rem; }
+    .ok { color: #0a7b28; font-size: .9rem; margin-bottom: .6rem; }
+    .error-border { border: 2px solid #c00 !important; }
+    input, textarea { padding: .5rem; }
+    label { font-weight: 600; margin-bottom: .25rem; }
+    small { margin-top: .25rem; }
+  </style>
+
+  <script>
+    // --- Utilidades: MAYÚSCULAS, sin tildes, ñ -> N
+    const toUpperNoAccents = s =>
+      s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ñ/gi,"N").toUpperCase();
+
+    function bindCounter(id, max, counterId) {
+      const el = document.getElementById(id), c = document.getElementById(counterId);
+      const update = () => {
+        const caret = el.selectionStart ?? el.value.length;
+        el.value = toUpperNoAccents(el.value);
+        if (el.value.length > max) el.value = el.value.slice(0, max);
+        // restaura caret si aplica
+        if (el.setSelectionRange) el.setSelectionRange(caret, caret);
+        c.textContent = `${el.value.length}/${max}`;
+      };
+      el.addEventListener('input', update);
+      update();
+    }
+
+    function setError(el, msgEl, ok, msg="") {
+      el.classList.toggle('error-border', !ok);
+      if (msgEl) msgEl.textContent = ok ? "" : msg;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // contadores + normalización
+      bindCounter('nombres',100,'nombresCount');
+      bindCounter('apellidos',100,'apellidosCount');
+      bindCounter('descripcion',1000,'descripcionCount');
+
+      // correo: MAYÚSCULAS, sin espacios, con @ y punto
+      const correo = document.getElementById('correo');
+      const correoErr = document.getElementById('correoError');
+      correo.addEventListener('input', () => {
+        const caret = correo.selectionStart ?? correo.value.length;
+        correo.value = toUpperNoAccents(correo.value).replace(/\s+/g,"");
+        if (correo.setSelectionRange) correo.setSelectionRange(caret, caret);
+
+        const v = correo.value;
+        const ok = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/.test(v);
+        setError(correo, correoErr, ok, "Correo inválido (sin espacios, en MAYÚSCULAS, con @ y punto).");
+      });
+
+      // semestre: 0..16
+      const semestre = document.getElementById('semestre');
+      const semErr = document.getElementById('semestreError');
+      semestre.addEventListener('input', () => {
+        const n = Number(semestre.value);
+        const ok = Number.isInteger(n) && n>=0 && n<=16;
+        setError(semestre, semErr, ok, "Debe ser un número entre 0 y 16.");
+      });
+
+      // envío final: bloquear si hay errores o vacíos
+      document.getElementById('contactForm').addEventListener('submit', (e) => {
+        const requiredIds = ['nombres','apellidos','correo','semestre','descripcion'];
+        const invalid = requiredIds.some(id => {
+          const el = document.getElementById(id);
+          if (!el.value.trim()) { el.classList.add('error-border'); return true; }
+          return el.classList.contains('error-border');
+        });
+        if (invalid) {
+          e.preventDefault();
+          alert("Revisa los campos en rojo.");
+        }
+      });
+    });
+  </script>
 </section>
 </body>
 </html>
