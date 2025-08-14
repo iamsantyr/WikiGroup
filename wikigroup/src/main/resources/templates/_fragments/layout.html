@@ -5,21 +5,39 @@
   <title th:text="${pageTitle} ?: 'WikiGroup'">WikiGroup</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <link rel="icon" th:href="@{/favicon.ico}" />
 </head>
-<body>
-  <header class="site-header">
-    <h1 class="site-title">WikiGroup</h1>
-    <!-- Menú dinámico -->
-    <div th:replace="~{_fragments/menu :: menu}"></div>
+<body class="bg">
+  <header class="site-header shadow-sm">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">WG</div>
+        <div class="titles">
+          <a th:href="@{/}" class="site-title">WikiGroup</a>
+          <small class="site-subtitle" th:text="${pageTitle} ?: 'Documentación del proyecto'">Documentación del proyecto</small>
+        </div>
+      </div>
+      <!-- Menú dinámico -->
+      <nav class="top-nav" th:replace="~{_fragments/menu :: menu}"></nav>
+    </div>
   </header>
 
-  <main>
-    <!-- Aquí se inyecta el contenido específico -->
-    <div th:replace="${content}">Cargando…</div>
+  <main class="container main">
+    <!-- Contenedor visual de página -->
+    <div class="page card fade-in" th:replace="${content}">
+      <!-- Aquí se inyecta el contenido específico -->
+    </div>
   </main>
 
   <footer class="site-footer">
-    <small>&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> – WikiGroup</small>
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <strong>WikiGroup</strong> — <span class="muted">Proyecto académico</span>
+      </div>
+      <div class="footer-right">
+        <small class="muted">&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span></small>
+      </div>
+    </div>
   </footer>
 
   <script th:src="@{/js/site.js}"></script>

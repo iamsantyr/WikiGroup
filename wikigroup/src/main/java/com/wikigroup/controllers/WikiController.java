@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WikiController {
 
-  // Redirige el inicio a /proyecto (puedes cambiar a /equipo si prefieres)
+  // Ahora Inicio muestra su propia vista "index" (ya no redirige)
   @GetMapping("/")
-  public String root() {
-    return "redirect:/proyecto";
+  public String inicio(Model model) {
+    model.addAttribute("pageTitle", "Inicio");
+    return "index";
   }
 
   // Presentación del equipo

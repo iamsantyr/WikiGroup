@@ -1,10 +1,60 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{_fragments/layout :: layout(~{::section})}">
-<head><meta charset="UTF-8"><title>Inicio</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${pageTitle} ?: 'Inicio'">Inicio</title>
+</head>
 <body>
 <section>
-  <!-- Página de inicio vacía a propósito -->
+
+  <!-- Portada ligera de inicio -->
+  <div class="grid grid-2" style="align-items:center; gap:1.5rem;">
+    <div class="fade-in">
+      <div class="badge">Bienvenido</div>
+      <h2 style="margin:.5rem 0 0;">Wiki del Proyecto</h2>
+      <p class="muted" style="margin:.5rem 0 1rem;">
+        Usa el menú para navegar por Requerimientos, Arquitectura, Desarrollo, Pruebas y Despliegue.
+      </p>
+
+      <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+        <a th:href="@{/proyecto}" class="btn">Ver Proyecto</a>
+        <a th:href="@{/requerimientos}" class="btn-secondary">Requerimientos</a>
+        <a th:href="@{/arquitectura}" class="btn-secondary">Arquitectura</a>
+      </div>
+    </div>
+
+    <div class="fade-in" style="justify-self:center; width:100%;">
+      <div class="card" style="aspect-ratio:16/9; display:grid; place-items:center;">
+        <div style="text-align:center; padding:1rem;">
+          <div style="font-size:3rem; line-height:1;">🚀</div>
+          <div class="muted" style="margin-top:.5rem;">Inicio — resumen y accesos rápidos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accesos rápidos -->
+  <h3 style="margin-top:1.75rem;">Accesos rápidos</h3>
+  <div class="grid grid-2">
+    <a th:href="@{/proyecto}" class="card" style="text-decoration:none; padding:1rem;">
+      <h3 style="margin:.25rem 0;">Proyecto</h3>
+      <p class="muted">Descripción general, objetivos, alcance y enlaces clave.</p>
+    </a>
+    <a th:href="@{/desarrollo}" class="card" style="text-decoration:none; padding:1rem;">
+      <h3 style="margin:.25rem 0;">Para desarrollo</h3>
+      <p class="muted">Endpoints, ejemplos de uso y notas técnicas.</p>
+    </a>
+    <a th:href="@{/pruebas}" class="card" style="text-decoration:none; padding:1rem;">
+      <h3 style="margin:.25rem 0;">Pruebas</h3>
+      <p class="muted">Casos de pruebas frontend y backend.</p>
+    </a>
+    <a th:href="@{/despliegue}" class="card" style="text-decoration:none; padding:1rem;">
+      <h3 style="margin:.25rem 0;">Despliegue</h3>
+      <p class="muted">Versiones, pipeline CI/CD y guía para Apache/K8s.</p>
+    </a>
+  </div>
+
 </section>
 </body>
 </html>
